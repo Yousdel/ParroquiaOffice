@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/">
+        <file>dark_Icons/moon.svg</file>
+        <file>dark_Icons/sun.svg</file>
+    </qresource>
+</RCC>

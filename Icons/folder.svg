@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg"
+     width="64" height="64" viewBox="0 0 64 64"
+     role="img" aria-label="Abrir archivo - carpeta">
+  <defs>
+    <linearGradient id="gTab" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0" stop-color="#fff1c2"/>
+      <stop offset="1" stop-color="#ffd166"/>
+    </linearGradient>
+    <linearGradient id="gBody" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0" stop-color="#ffd166"/>
+      <stop offset="1" stop-color="#f4b400"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Pestaña de la carpeta -->
+  <rect x="6" y="12" width="28" height="14" rx="2" ry="2" fill="url(#gTab)"/>
+
+  <!-- Cuerpo de la carpeta -->
+  <path d="M6 22 h52 a4 4 0 0 1 4 4 v18 a4 4 0 0 1 -4 4 H10 a4 4 0 0 1 -4 -4 z"
+        fill="url(#gBody)"/>
+
+  <!-- Sutileza de sombra superior -->
+  <path d="M6 22 h52 v2 H6 z" fill="#000" opacity="0.06"/>
+
+  <!-- Detalle interior (línea) -->
+  <path d="M10 32 h44" stroke="#000" stroke-opacity="0.06" stroke-width="1"/>
+</svg>

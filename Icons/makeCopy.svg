@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="Backup icon">
+  <!-- Database (cylinder) -->
+  <ellipse cx="20" cy="14" rx="14" ry="6" fill="#4A90E2" stroke="#2F76C3" stroke-width="1.2"/>
+  <rect x="6" y="14" width="28" height="18" rx="4" fill="#4A90E2" stroke="#2F76C3" stroke-width="1.2"/>
+  <ellipse cx="20" cy="32" rx="14" ry="6" fill="#3A78D2" stroke="#2F76C3" stroke-width="1.2"/>
+  <!-- Layer lines on cylinder -->
+  <ellipse cx="20" cy="20.5" rx="14" ry="3.2" fill="none" stroke="#2F76C3" stroke-width="1"/>
+  <ellipse cx="20" cy="26.5" rx="14" ry="3.2" fill="none" stroke="#2F76C3" stroke-width="1"/>
+
+  <!-- Backup box (destination) -->
+  <rect x="36" y="38" width="20" height="12" rx="2" fill="#D1D5D9" stroke="#8D8D8D" stroke-width="1"/>
+  <rect x="36" y="34" width="20" height="4" rx="2" fill="#BFC5C9" stroke="#8D8D8D" stroke-width="1"/>
+
+  <!-- Arrow (from DB to box) -->
+  <g fill="#2ECC71" stroke="#1EA85A" stroke-width="1">
+    <path d="M42 10 L42 30" stroke="#1EA85A" stroke-width="2" stroke-linecap="round"/>
+    <path d="M48 26 L42 32 L36 26 L38.2 24 L42 27.6 L45.8 24 Z" />
+  </g>
+</svg>

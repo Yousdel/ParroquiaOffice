@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg"
+     width="24" height="24" viewBox="0 0 24 24"
+     role="img" aria-label="Acerca de" focusable="false">
+  <!-- Contorno circular -->
+  <circle cx="12" cy="12" r="9" fill="none" stroke="#2d3436" stroke-width="1.5"/>
+  <!-- Punto superior de la "i" -->
+  <circle cx="12" cy="7.2" r="0.95" fill="#2d3436"/>
+  <!-- Tallo de la "i" -->
+  <rect x="11.15" y="9.4" width="1.7" height="5.2" rx="0.85" fill="#2d3436"/>
+</svg>

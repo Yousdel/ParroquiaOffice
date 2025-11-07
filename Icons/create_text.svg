@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg"
+     width="24" height="24" viewBox="0 0 24 24"
+     role="img" aria-label="Crear archivo de texto" focusable="false">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Página con esquina doblada -->
+    <path d="M6 2h7l5 5v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z"/>
+    <path d="M13 2v5h5"/>
+    <!-- Líneas de texto -->
+    <line x1="8" y1="10" x2="16" y2="10"/>
+    <line x1="8" y1="13" x2="16" y2="13"/>
+    <line x1="8" y1="16" x2="12" y2="16"/>
+    <!-- Indicador "crear" (más) -->
+    <circle cx="18" cy="18" r="3"/>
+    <line x1="18" y1="15.8" x2="18" y2="20.2"/>
+    <line x1="15.8" y1="18" x2="20.2" y2="18"/>
+  </g>
+</svg>

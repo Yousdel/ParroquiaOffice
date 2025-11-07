@@ -1,0 +1,17 @@
+<RCC>
+    <qresource prefix="/">
+        <file>Icons/icono.svg</file>
+        <file>Icons/find.svg</file>
+        <file>Icons/plus.svg</file>
+        <file>Icons/folder.svg</file>
+        <file>Icons/minus-red.svg</file>
+        <file>Icons/create_book.svg</file>
+        <file>Icons/delete_book.svg</file>
+        <file>Icons/about.svg</file>
+        <file>Icons/create_text.svg</file>
+        <file>Icons/create_db.svg</file>
+        <file>Icons/view_edit_record.svg</file>
+        <file>Icons/splash.svg</file>
+        <file>Icons/makeCopy.svg</file>
+    </qresource>
+</RCC>

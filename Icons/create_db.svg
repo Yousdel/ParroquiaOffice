@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg"
+     width="24" height="24" viewBox="0 0 24 24"
+     role="img" aria-label="Crear base de datos" focusable="false">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Ellipse superior (tapa) -->
+    <ellipse cx="12" cy="6.2" rx="6" ry="2"/>
+    <!-- Cuerpo (paredes) -->
+    <path d="M6 6.2v3.6c0 1.2 3 2.2 6 2.2s6-1 6-2.2V6.2"/>
+    <!-- Ellipses internas para capas -->
+    <ellipse cx="12" cy="10.8" rx="6" ry="2"/>
+    <ellipse cx="12" cy="15.2" rx="6" ry="2"/>
+    <!-- Indicador "crear" (más) -->
+    <circle cx="18" cy="18" r="3"/>
+    <line x1="18" y1="15.8" x2="18" y2="20.2"/>
+    <line x1="15.8" y1="18" x2="20.2" y2="18"/>
+  </g>
+</svg>
