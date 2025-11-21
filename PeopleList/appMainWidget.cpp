@@ -9,7 +9,6 @@
 #include <QFileInfo>
 
 #include "Tools/AppTitle.h"
-#include "ShowOrHideBtns.h"
 #include "databasetableview.h"
 #include "AboutWidget/aboutwidget.h"
 #include "Books/createbookwidget.h"
@@ -18,6 +17,8 @@
 #include "PeopleList/findtextwidget.h"
 #include "bookslist.h"
 #include "DarkLightMode/darklightmode.h"
+#include "DBWidget/dbwidget.h"
+
 
 void AppMainWidget::takeDecissionForShowOrHideSuggestWidget()
 {
@@ -33,7 +34,7 @@ void AppMainWidget::takeDecissionForShowOrHideSuggestWidget()
 
 void AppMainWidget::hideOpenBtnAndTitle()
 {
-    openDbBtn->hide();
+    dbwidget->hideOpenBtn();
     QFileInfo fi(filePath);
     QString s = fi.fileName();
     setWindowTitle(QString("%2 - %1").arg(APPTITLE,s));
@@ -45,10 +46,18 @@ void AppMainWidget::setBooksInView()
     view->setBooks(bl.getList());
 }
 
-void AppMainWidget::showParrName(const QString parr)
+
+bool AppMainWidget::openDB(const QString &dbfilePath)
 {
-    parroq->setText(tr("Parroquia: <h3><br/><b>%1</b></h3>").arg(parr));
-    parroq->show();
+    filePath = dbfilePath;
+    // Abrir DB y comprobar éxito
+    if (!view->openDatabase(filePath)) {
+        QMessageBox::critical(this, tr("Error"),
+                              tr("No se pudo abrir o "
+                                 "crear la base de datos:\n%1").arg(filePath));
+        return false;
+    }
+    return true;
 }
 
 
@@ -88,35 +97,8 @@ AppMainWidget::AppMainWidget(QWidget *parent)
     QVBoxLayout *main_lay=new QVBoxLayout(this);
 
     QHBoxLayout *lay_btns=new QHBoxLayout;
-    createDbBtn=new QPushButton(tr("Crear la Base\n"
-                                "de Datos"), this);
-    createDbBtn->setIcon(QIcon(":/Icons/create_db.svg"));
-    createDbBtn->setIconSize(QSize(24,24));
-    openDbBtn=new QPushButton(tr("Abrir\n"
-                              "Base de Datos"),this);
-    openDbBtn->setIcon(QIcon(":/Icons/folder.svg"));
-    openDbBtn->setIconSize(QSize(24,24));
-    removeDBBtn=new QPushButton(tr("Borrar la\n"
-                                  "Base de Datos."), this);
-    removeDBBtn->setEnabled(false);
 
-    QPushButton *makeDBCopy=new QPushButton(tr("Hacer Salva de\n"
-                                                 "la Base de Datos"),this);
-    makeDBCopy->setIcon(QIcon(":/Icons/makeCopy.svg"));
-    makeDBCopy->hide();
-
-    parroq = new QLabel("",this);
-    parroq->hide();
-    QHBoxLayout *dbBtns1=new QHBoxLayout;
-    dbBtns1->addWidget(createDbBtn);
-    dbBtns1->addWidget(openDbBtn);
-    dbBtns1->addWidget(removeDBBtn);
-    dbBtns1->addWidget(makeDBCopy);
-
-    QVBoxLayout *dbBtns=new QVBoxLayout;
-    dbBtns->addWidget(parroq);
-    // dbBtns->addStretch(0x1);
-    dbBtns->addLayout(dbBtns1);
+    dbwidget = new DBWidget(this);
 
     createBook= new QPushButton(tr("Crear un\n"
                                     "libro"),this);
@@ -127,7 +109,7 @@ AppMainWidget::AppMainWidget(QWidget *parent)
     selectBookWidget = new SelectBookWidget("",this);
     selectBookWidget->hide();
 
-    QPushButton *removeBook = new QPushButton("Eliminar\n"
+    removeBook = new QPushButton("Eliminar\n"
                                               "un libro",this);
     removeBook->setIcon(QIcon(":/Icons/delete_book.svg"));
     removeBook->setIconSize(QSize(24,24));
@@ -139,8 +121,6 @@ AppMainWidget::AppMainWidget(QWidget *parent)
     book_lay->addWidget(selectBookWidget);
     book_lay->addWidget(removeBook);
 
-    sh=new ShowOrHideBtns(createDbBtn, openDbBtn, removeDBBtn);
-    sh->readCreatedFile();
 
     findText= new FindTextWidget(this);
     findText->hide();
@@ -158,7 +138,7 @@ AppMainWidget::AppMainWidget(QWidget *parent)
 
     view= new DatabaseTableView(this);
 
-    lay_btns->addLayout(dbBtns);
+    lay_btns->addWidget(dbwidget);
     lay_btns->addStretch(0x1);
     lay_btns->addLayout(book_lay);
     lay_btns->addStretch(0x1);    
@@ -177,86 +157,12 @@ AppMainWidget::AppMainWidget(QWidget *parent)
         w->show();
     });
 
-    connect(createDbBtn, &QPushButton::clicked, this, [this](){
-        // Usar un diálogo de "guardar" para elegir carpeta y nombre
-        filePath = QFileDialog::getSaveFileName(
-            this,
-            tr("Crea un Directorio y la Nueva Base de Datos"),
-            QDir::homePath() + QDir::separator() + "nueva_base.db",
-            tr("Bases SQLite (*.db);;Todos los archivos (*)"));
-
-        if (filePath.isEmpty())
-            return; // el usuario canceló
-
-        // Asegurar extensión .db si falta
-        QFileInfo fi(filePath);
-        if (fi.suffix().isEmpty())
-            filePath += ".db";
-
-        qDebug() << "Crear DB en:" << filePath;
-
-        // Abrir DB y comprobar éxito (asumo que openDatabase devuelve bool)
-        if (!view->openDatabase(filePath)) {
-            QMessageBox::critical(this, tr("Error"),
-                                  tr("No se pudo abrir o "
-                                     "crear la base de datos:\n%1").arg(filePath));
-            return;
-        }
-        if (sh) sh->createTheCreatedFile();        
-        createBook->show();
-        takeDecissionForShowOrHideSuggestWidget();
-        hideOpenBtnAndTitle();
-        QString parr;
-        do {
-            parr=
-                QInputDialog::getText(this, tr("Parroquia"),
-                                         tr("Introduce el nombre completo de la parroquia\n\n"
-                                         "(No puedes cancelar esto porque es necesario\n"
-                                         "para el resto del trabajo)"));
-        } while (parr.isEmpty());
-        showParrName(parr);
-        view->setParroquia(parr);
-        setBooksInView();
-    });
-
-    connect(openDbBtn, &QPushButton::clicked,
-            this, [this, removeBook, makeDBCopy](){
-        filePath = QFileDialog::getOpenFileName(
-            this,
-            tr("Abrir Base de Datos"),
-            QDir::homePath(),
-            tr("Bases SQLite (*.db);;Todos los archivos (*)"));
-
-        if (filePath.isEmpty())
-            return; // el usuario canceló
-
-        if (!view->openDatabase(filePath)) {
-            QMessageBox::critical(this, tr("Error"),
-                                  tr("No se pudo abrir la base de datos:\n%1").arg(filePath));
-            return;
-        }
-        createBook->show();
-        dropBook->setPath(filePath);
-        takeDecissionForShowOrHideSuggestWidget();
-        hideOpenBtnAndTitle();
-        view->readParroquiaFromFile();
-        setBooksInView();
-        if (view->books().size() > 0x0){
-            dropBook->updateBooks();
-            dropBook->hide();
-            removeBook->show();
-            findText->show();
-        }
-        showParrName(view->parroq());
-        makeDBCopy->show();
-    });
-
-    connect(createBook, &QPushButton::clicked,this,[this,removeBook](){
+    connect(createBook, &QPushButton::clicked,this,[this](){
         createBookWidget= new CreateBookWidget();
         createBookWidget->show();
         connect(createBookWidget, &CreateBookWidget::createBook,
                 this,
-                [this,removeBook](const CreateBookWidget::BookType &type,
+                [this](const CreateBookWidget::BookType &type,
                                 const QString &sigla,
                                     const QString &entireName)
                 {
@@ -302,16 +208,55 @@ AppMainWidget::AppMainWidget(QWidget *parent)
     });
     connect(view, &DatabaseTableView::returnToNormalView,
             findText, &FindTextWidget::returnToNormalView);
-    connect(makeDBCopy, &QPushButton::clicked, this, &AppMainWidget::makeAnEntireDBCopy);
+
+
+    connect(dbwidget, &DBWidget::openDBbyCreateDB,
+            this, &AppMainWidget::openDBbyCreateDB);
+    connect(dbwidget, &DBWidget::openDBbyOpenDBButton,
+        this, &AppMainWidget::openDBbyOpenDBBtn);
+
+    connect(dbwidget, &DBWidget::setParrName, this, &AppMainWidget::setParr);
 
     resize(1000,700);
+}
+
+void AppMainWidget::openDBbyOpenDBBtn(const QString &dbFilePath)
+{
+    filePath = dbFilePath;
+    if (!openDB(filePath)) return;
+    createBook->show();
+    dropBook->setPath(filePath);
+    takeDecissionForShowOrHideSuggestWidget();
+    hideOpenBtnAndTitle();
+    view->readParroquiaFromFile();
+    setBooksInView();
+    if (view->books().size() > 0x0){
+        dropBook->updateBooks();
+        dropBook->hide();
+        removeBook->show();
+        findText->show();
+    }
+    dbwidget->showParrName(view->parroq());
+    dbwidget->showMakeDBCopy();
+}
+
+
+void AppMainWidget::openDBbyCreateDB(const QString &dbfilePath)
+{
+    if (!openDB(dbfilePath)) return;
+    createBook->show();
+    takeDecissionForShowOrHideSuggestWidget();
+    hideOpenBtnAndTitle();
+    dbwidget->askParroq();
+}
+
+void AppMainWidget::setParr(const QString &parrName){
+    view->setParroquia(parrName);
+    setBooksInView();
 }
 
 AppMainWidget::~AppMainWidget(){
     delete dropBook;
     delete view;
-    delete createDbBtn;
-    delete openDbBtn;
-    delete removeDBBtn;
-    delete sh;
+
 }

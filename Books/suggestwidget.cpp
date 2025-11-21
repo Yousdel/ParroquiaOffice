@@ -6,6 +6,7 @@
 #include <QVBoxLayout>
 #include <QTimer>
 #include <QPushButton>
+#include <QLabel>
 
 
 
@@ -36,12 +37,15 @@ SuggestWidget::SuggestWidget(const QString &db_filepath, QWidget *parent)
 {
     bookList=new BooksList(path);
     auto *layout = new QHBoxLayout(this);
+    m_errLab = new QLabel(tr("Error"),this);
+    m_errLab->hide();
 
     QPushButton *find=new QPushButton(this);
     find->setIcon(QIcon(":/Icons/find.svg"));
 
     layout->addWidget(m_lineEdit);
     layout->addWidget(find);
+    layout->addWidget(m_errLab);
     setLayout(layout);
 
     // Configurar el completador
@@ -99,5 +103,10 @@ void SuggestWidget::onTextEdited(const QString &text)
 
 void SuggestWidget::emitBookSelected()
 {
-    emit bookSelected(m_lineEdit->text());
+    if (m_allSuggestions.contains(m_lineEdit->text()))
+        emit bookSelected(m_lineEdit->text());
+    else{
+        m_errLab->show();
+        QTimer::singleShot(1300, m_errLab, &QLabel::hide);
+    }
 }

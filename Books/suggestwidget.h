@@ -5,6 +5,7 @@
 
 
 class QLineEdit;
+class QLabel;
 class QStringListModel;
 class QCompleter;
 
@@ -42,6 +43,7 @@ private slots:
     void emitBookSelected();
 
 private:
+    QLabel *m_errLab;
     QLineEdit *m_lineEdit;
     QStringListModel *m_model;
     QCompleter *m_completer;

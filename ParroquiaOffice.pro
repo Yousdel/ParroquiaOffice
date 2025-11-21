@@ -19,6 +19,7 @@ SOURCES += \
     Books/selectbookwidget.cpp \
     Books/sqlEngine.cpp \
     Books/suggestwidget.cpp \
+    DBWidget/dbwidget.cpp \
     DarkLightMode/darklightmode.cpp \
     Field/fieldwidget.cpp \
     Field/stringforfield.cpp \
@@ -54,6 +55,7 @@ HEADERS += \
     Books/selectbookwidget.h \
     Books/sqlEngine.h \
     Books/suggestwidget.h \
+    DBWidget/dbwidget.h \
     DarkLightMode/dark_files.h \
     DarkLightMode/darklightmode.h \
     Field/fieldwidget.h \
