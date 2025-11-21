@@ -3,10 +3,12 @@
 
 #include <QWidget>
 #include <QPushButton>
+#include <QCheckBox>
 #include <QDir>
 #include <QFileInfo>
 #include <QMessageBox>
 #include <QDebug>
+
 
 #include "PeopleList/ShowOrHideBtns.h"
 #include "PeopleList/Tools/files.h"
@@ -26,6 +28,7 @@ private:
     QPushButton *openDbBtn;
     QPushButton *removeDBBtn;
     QPushButton *makeDBCopy;
+    QCheckBox *alwaysSameDB;
     QLabel *parroq;
     ShowOrHideBtns *sh;
     QString filePath;
@@ -45,11 +48,17 @@ public:
     void showMakeDBCopy(){
         makeDBCopy->show();
     }
+    bool openDbAtStart() const { return alwaysSameDB->isChecked(); }
+    const QString &getFilePath() const { return filePath; }
 
 public slots:
     QString askParroq();
 
 private slots:
+    void alwaysSameDBClicked(bool b){
+        qDebug()<<"alwaysSameClicked"<<b;
+        Files::writeAlwaysOpenDb(b, filePath);
+    }
     int makeAnEntireDBCopy() {
         if (filePath.isEmpty()) {
             qWarning() << "filePath vacío";

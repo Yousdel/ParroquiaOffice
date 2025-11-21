@@ -29,6 +29,14 @@ public:
     // coloca el valor en 'created'. Si no existe/ocurre error devuelve false.
     bool readCreatedDBFile(bool &created);
 
+    // Escribe el booleano 'true' indicando que la base de datos fue creada.
+    // Devuelve true si la escritura tuvo éxito.
+    static bool writeAlwaysOpenDb(bool always, const QString &dbfilepath);
+
+    // Lee el booleano del archivo. Si la lectura es correcta devuelve true y
+    // coloca el valor en 'created'. Si no existe/ocurre error devuelve false.
+    static bool readAlwaysDBFile(bool &always, QString &dbfilepath);
+
     bool writeCurrentTable(const QString &currTable);
 
     bool readCurrentTable(QString &currTable);

@@ -33,6 +33,9 @@ QString DBWidget::askParroq()
 DBWidget::DBWidget(QWidget *parent)
     : QWidget{parent}
 {
+    alwaysSameDB = new QCheckBox(tr("Siempre abrir esta base\n"
+                                    "de datos al iniciar"),this);
+    alwaysSameDB->hide();
     createDbBtn=new QPushButton(tr("Crear la Base\n"
                                      "de Datos"), this);
     createDbBtn->setIcon(QIcon(":/Icons/create_db.svg"));
@@ -61,11 +64,13 @@ DBWidget::DBWidget(QWidget *parent)
     dbBtns1->addWidget(makeDBCopy);
     QVBoxLayout *dbBtns=new QVBoxLayout;
     dbBtns->addWidget(parroq);
+    dbBtns->addWidget(alwaysSameDB);
     dbBtns->addLayout(dbBtns1);
 
     sh=new ShowOrHideBtns(createDbBtn, openDbBtn, removeDBBtn);
     sh->readCreatedFile();
 
+    connect(alwaysSameDB, &QCheckBox::clicked, this, &DBWidget::alwaysSameDBClicked);
     connect(makeDBCopy, &QPushButton::clicked, this, &DBWidget::makeAnEntireDBCopy);
     connect(createDbBtn, &QPushButton::clicked, this, [this](){
         // Usar un diálogo de "guardar" para elegir carpeta y nombre
@@ -88,6 +93,7 @@ DBWidget::DBWidget(QWidget *parent)
         emit openDBbyCreateDB(filePath);
 
         if (sh) sh->createTheCreatedFile();
+        alwaysSameDB->show();
     });
 
     connect(openDbBtn, &QPushButton::clicked,
@@ -100,9 +106,16 @@ DBWidget::DBWidget(QWidget *parent)
 
                 if (filePath.isEmpty())
                     return; // el usuario canceló
-
+                alwaysSameDB->show();
                 emit openDBbyOpenDBButton(filePath);
             });
 
     setLayout(dbBtns);
+    // leer de archivo el booleano que dice si hay que abrir la misma base de datos y su path
+    bool b=false;
+    Files::readAlwaysDBFile(b,filePath);
+    alwaysSameDB->setChecked(b);
+    if (b) {
+        alwaysSameDB->show();
+    }
 }

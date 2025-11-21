@@ -98,7 +98,7 @@ AppMainWidget::AppMainWidget(QWidget *parent)
 
     QHBoxLayout *lay_btns=new QHBoxLayout;
 
-    dbwidget = new DBWidget(this);
+    dbwidget = new DBWidget(this);    
 
     createBook= new QPushButton(tr("Crear un\n"
                                     "libro"),this);
@@ -218,6 +218,10 @@ AppMainWidget::AppMainWidget(QWidget *parent)
     connect(dbwidget, &DBWidget::setParrName, this, &AppMainWidget::setParr);
 
     resize(1000,700);
+    // si hay que abrir la misma base de datos, abrirla siempre
+    if (dbwidget->openDbAtStart()){
+        openDBbyOpenDBBtn(dbwidget->getFilePath());
+    }
 }
 
 void AppMainWidget::openDBbyOpenDBBtn(const QString &dbFilePath)

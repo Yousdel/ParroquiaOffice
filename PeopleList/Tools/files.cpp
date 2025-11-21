@@ -72,6 +72,52 @@ bool Files::readCreatedDBFile(bool &created)
     return ok;
 }
 
+bool Files::writeAlwaysOpenDb(bool always, const QString &dbfilepath)
+{
+    QFile file(QDir::homePath() + "/parroquia_office/always.txt");
+    if (!file.open(QIODevice::WriteOnly)) {
+        qDebug()<<"no se pudo abrir always.txt";
+        return false;
+    }
+
+    QDataStream out(&file);
+    out.setVersion(QDataStream::Qt_5_0);
+
+    out << always;
+    out << dbfilepath;
+
+    file.close();
+
+    return true;
+}
+
+bool Files::readAlwaysDBFile(bool &always, QString &dbfilepath)
+{
+    QFile file(QDir::homePath() + "/parroquia_office/always.txt");
+    if (!file.exists()) {
+        always = false;
+        return false; // no existe el archivo
+    }
+    if (!file.open(QIODevice::ReadOnly)) {
+        always = false;
+        return false; // error al abrir
+    }
+
+    QDataStream in(&file);
+    in.setVersion(QDataStream::Qt_5_0);
+    bool ok = true;
+    in >> always;
+    in >> dbfilepath;
+    if (in.status() != QDataStream::Ok) {
+        always = false;
+        ok = false;
+    }
+
+    file.close();
+
+    return ok;
+}
+
 bool Files::writeCurrentTable(const QString &currTable)
 {
     QFile file(m_filePath+"curr_t.txt");
