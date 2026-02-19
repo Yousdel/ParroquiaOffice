@@ -158,6 +158,10 @@ void NewMarriageWidg::setMinister(const QString &str)
 
 void NewMarriageWidg::on_saveBtn_clicked()
 {
+    if (!ui->marriageDate->date().isValid()) {
+        QMessageBox::warning(this, "Error", "La fecha de matrimonio no es válida");
+        return;
+    }
     saveData(CreateBookWidget::GM);
     if (!setSaved()) {
         return;

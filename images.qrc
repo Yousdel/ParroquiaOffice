@@ -13,5 +13,9 @@
         <file>Icons/view_edit_record.svg</file>
         <file>Icons/splash.svg</file>
         <file>Icons/makeCopy.svg</file>
+        <file>Images/defunction_img.svg</file>
+        <file>Images/marriage_image.svg</file>
+        <file>Images/confirmation_image.svg</file>
+        <file>Images/baptism_image.svg</file>
     </qresource>
 </RCC>

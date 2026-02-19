@@ -200,6 +200,15 @@ void BaptismNewPersonWidg::on_saveBtn_clicked()
     if (!setSaved()) {
         return;
     }
+    // Validar que las fechas sean válidas
+    if (!ui->baptismDate->date().isValid()) {
+        QMessageBox::warning(this, "Error", "La fecha de bautismo no es válida");
+        return;
+    }
+    if (!ui->bornDate->date().isValid()) {
+        QMessageBox::warning(this, "Error", "La fecha de nacimiento no es válida");
+        return;
+    }
     if (!datesCoherency(ui->bornDate->date() <= ui->baptismDate->date(),
                        tr("La fecha de baustismo es anterior a la "
                           "de nacimiento de la persona.")))

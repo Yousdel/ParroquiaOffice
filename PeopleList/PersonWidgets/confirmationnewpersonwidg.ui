@@ -24,38 +24,59 @@
     <widget class="CommonWidget" name="commonWidget" native="true"/>
    </item>
    <item>
-    <layout class="QVBoxLayout" name="verticalLayout_2">
+    <layout class="QVBoxLayout" name="verticalLayout">
      <item>
-      <layout class="QVBoxLayout" name="verticalLayout">
-       <item>
+      <layout class="QGridLayout" name="gridLayout">
+       <item row="0" column="0">
         <widget class="QLabel" name="label">
          <property name="text">
           <string>Fecha de Confirmación</string>
          </property>
         </widget>
        </item>
-       <item>
-        <widget class="QDateEdit" name="confirmationDate"/>
+       <item row="1" column="0">
+        <widget class="QDateEdit" name="confirmationDate">
+         <property name="displayFormat">
+          <string>yyyy-MM-dd</string>
+         </property>
+         <property name="calendarPopup">
+          <bool>true</bool>
+         </property>
+         <property name="date">
+          <date>
+           <year>2000</year>
+           <month>1</month>
+           <day>1</day>
+          </date>
+         </property>
+        </widget>
        </item>
-       <item>
+       <item row="2" column="0">
         <widget class="QLabel" name="label_2">
          <property name="text">
           <string>Padrino o Madrina</string>
          </property>
         </widget>
        </item>
-       <item>
+       <item row="3" column="0">
         <widget class="QLineEdit" name="godFaOrMother"/>
        </item>
-       <item>
+       <item row="4" column="0">
         <widget class="QLabel" name="label_3">
          <property name="text">
           <string>Ministro</string>
          </property>
         </widget>
        </item>
-       <item>
+       <item row="5" column="0">
         <widget class="QLineEdit" name="minister"/>
+       </item>
+       <item row="0" column="1" rowspan="6">
+        <widget class="QLabel" name="label_5">
+         <property name="text">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/Images/confirmation_image.svg&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+        </widget>
        </item>
       </layout>
      </item>

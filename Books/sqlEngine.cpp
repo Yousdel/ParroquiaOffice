@@ -33,9 +33,9 @@ const QString &SQLEngine::createBookSQLString(const CreateBookWidget::BookType &
 
     //para libro de bautismo
     if (CreateBookWidget::isBaptismType(type)) {
-        s.append("Fecha_de_nacimiento TEXT NOT NULL, ");
+        s.append("Fecha_de_nacimiento DATE NOT NULL, ");
         s.append("Lugar_de_nacimiento TEXT NOT NULL, ");
-        s.append("Fecha_de_bautismo TEXT NOT NULL, ");
+        s.append("Fecha_de_bautismo DATE NOT NULL, ");
 
         s.append("Hijo_de_Padre TEXT NOT NULL, ");
         s.append("Naturalidad_del_padre TEXT NOT NULL, ");
@@ -62,7 +62,7 @@ const QString &SQLEngine::createBookSQLString(const CreateBookWidget::BookType &
         s.append("Contrayente_Ella TEXT NOT NULL, ");
         s.append("Lugar_de_nacimiento_El TEXT NOT NULL, ");
         s.append("Lugar_de_nacimiento_Ella TEXT NOT NULL, ");
-        s.append("Fecha_del_Matrimonio TEXT NOT NULL, ");
+        s.append("Fecha_del_Matrimonio DATE NOT NULL, ");
 
         s.append("Nombre_Padre_El TEXT NOT NULL, ");
         s.append("Nombre_Madre_El TEXT NOT NULL, ");
@@ -79,8 +79,8 @@ const QString &SQLEngine::createBookSQLString(const CreateBookWidget::BookType &
     } else
         //Libro de Defunciones
     if (CreateBookWidget::isDefunctionType(type)) {
-        s.append("Fecha_de_Excequias TEXT NOT NULL, ");
-        s.append("Fecha_de_muerte TEXT NOT NULL, ");
+        s.append("Fecha_de_Excequias DATE NOT NULL, ");
+        s.append("Fecha_de_muerte DATE NOT NULL, ");
 
         s.append("Causa_de_la_muerte TEXT NOT NULL, ");
         s.append("Edad TEXT NOT NULL, ");
@@ -91,7 +91,7 @@ const QString &SQLEngine::createBookSQLString(const CreateBookWidget::BookType &
     } else
         //Libro de Confirmaciones
     if (CreateBookWidget::isConfirmationType(type)) {
-        s.append("Fecha_de_Confirmacion TEXT NOT NULL, ");
+        s.append("Fecha_de_Confirmacion DATE NOT NULL, ");
         s.append("Padrino_o_Madrina TEXT NOT NULL, ");
         s.append("Ministro TEXT NOT NULL, ");
     }

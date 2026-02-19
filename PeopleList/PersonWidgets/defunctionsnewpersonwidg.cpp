@@ -87,6 +87,14 @@ void DefunctionsNewPersonWidg::setMinister(const QString &str)
 
 void DefunctionsNewPersonWidg::on_saveBtn_clicked()
 {
+    if (!ui->dateOfDeath->date().isValid()) {
+        QMessageBox::warning(this, "Error", "La fecha de muerte no es válida");
+        return;
+    }
+    if (!ui->burialDate->date().isValid()) {
+        QMessageBox::warning(this, "Error", "La fecha de excequias no es válida");
+        return;
+    }
     saveData(CreateBookWidget::GD);
     if (!setSaved()) {
         return;

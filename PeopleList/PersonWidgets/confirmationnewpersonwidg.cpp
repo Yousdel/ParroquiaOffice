@@ -47,6 +47,10 @@ void ConfirmationNewPersonWidg::setMinister(const QString &str)
 
 void ConfirmationNewPersonWidg::on_pushButton_clicked()
 {
+    if (!ui->confirmationDate->date().isValid()) {
+        QMessageBox::warning(this, "Error", "La fecha de confirmación no es válida");
+        return;
+    }
     // --guardar
     saveData(CreateBookWidget::GC);
     if (!setSaved()) {

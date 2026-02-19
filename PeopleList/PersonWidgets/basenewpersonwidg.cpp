@@ -4,9 +4,9 @@ void BaseNewPersonWidg::appendBaptism(const CreateBookWidget::BookType &type)
 {
     if (!CreateBookWidget::isBaptismType(type))
         return;
-    append(QVariant(bornDate()));
+    append(QVariant(bornDate().toString("yyyy-MM-dd")));
     append(QVariant(bornPlace()));
-    append(QVariant(baptismDate()));
+    append(QVariant(baptismDate().toString("yyyy-MM-dd")));
 
     append(QVariant(father()));
     append(QVariant(fatherPlace()));
@@ -36,7 +36,7 @@ void BaseNewPersonWidg::appendMarriage(const CreateBookWidget::BookType &type)
     append(QVariant(getFemalePerson()));
     append(QVariant(maleBornPlace()));
     append(QVariant(femaleBornPlace()));
-    append(QVariant(marriageDate()));
+    append(QVariant(marriageDate().toString("yyyy-MM-dd")));
 
     append(QVariant(maleFather()));
     append(QVariant(maleMother()));
@@ -56,8 +56,8 @@ void BaseNewPersonWidg::appendDefunction(const CreateBookWidget::BookType &type)
 {
     if (!CreateBookWidget::isDefunctionType(type))
         return;
-    append(QVariant(burialDate()));
-    append(QVariant(dateOfDeath()));
+    append(QVariant(burialDate().toString("yyyy-MM-dd")));
+    append(QVariant(dateOfDeath().toString("yyyy-MM-dd")));
 
     append(QVariant(causeOfDeath()));
     append(QVariant(age()));
@@ -71,7 +71,7 @@ void BaseNewPersonWidg::appendConfirmation(const CreateBookWidget::BookType &typ
 {
     if (!CreateBookWidget::isConfirmationType(type))
         return;
-    append(QVariant(confirmationDate()));
+    append(QVariant(confirmationDate().toString("yyyy-MM-dd")));
     append(QVariant(godFatherOrMother()));
     append(QVariant(minister()));
 }
